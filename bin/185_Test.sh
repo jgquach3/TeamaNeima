@@ -1,18 +1,35 @@
 #!/usr/bin/env bash
-rm bt2*
-rm *.bam
-rm -rf test_out
 
-echo ">>> building bowtie2 index..."
-bowtie2-build CDR1as_locus.fa bt2_cdr1as_locus &> bt2_build.log
-echo ">>> aligning example reads"
-bowtie2 -p16 --very-sensitive --mm -M20 --score-min=C,-15,0 -x bt2_cdr1as_locus -f -U reads.fa 2> bt2_firstpass.log | samtools view -hbuS - | samtools sort - test_vs_cdr1as
+if [ -z "$1" ]
+  then
+  echo "Please enter arguments"
+  #exit 1
+else
+#Takes a bam file and a reference genome
+bam_file=$1
+ref=$2
+unmapped=./data/unmapped/unmapped_$(basename $1)
+anchors=./data/anchors/anchors_$(basename ${1%.*}).qfa
+prefix=185_test
+out_bed=./output_files/$(basename ${1%.*}).bed
+out_reads=./output_files/$(basename ${1%.*}).reads
+bt_log=./logs/bt_$(basename ${1%.*}).log
+fc_log=./logs/fc_$(basename ${1%.*}).log
+
 echo ">>> get the unmapped"
-samtools view -hf 4 test_vs_cdr1as.bam | samtools view -Sb - > unmapped_test.bam
+samtools view -hf 4 $bam_file | samtools view -Sb - > $unmapped
 echo ">>> split into anchors"
-../unmapped2anchors.py unmapped_test.bam > test_anchors.qfa
+./bin/find_circ/unmapped2anchors.py $unmapped > $anchors
 echo ">>> run find_circ.py"
-mkdir test_out
-bowtie2 --reorder --mm -M20 --score-min=C,-15,0 -q -x bt2_cdr1as_locus -U test_anchors.qfa 2> bt2_secondpass.log | ../find_circ.py -r ../samples_example.txt -G . -p cdr1as_test_ -s test_out/sites.log > test_out/sites.bed 2> test_out/sites.reads
-echo ">>> compare to reference result. You should see 'overlap 1' here."
-../cmp_bed.py test_out/sites.bed result_test.bed
+bowtie2 --reorder --mm -M20 --score-min=C,-15,0 -q -x $ref -U $anchors 2> $bt_log | ../find_circ.py -G . -p $prefix -s $fc_log > $out_bed 2> $out_reads
+#echo ">>> compare to reference result. You should see 'overlap 1' here."
+#echo ../cmp_bed.py test_out/sites.bed result_test.bed
+
+
+
+### Please help with line 15
+# -G path to genome with one fasta file for each chrm
+# -r we would have to make that file
+# -s output log
+# -p prefix to append to each name 
+fi
