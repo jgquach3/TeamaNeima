@@ -1,0 +1,8 @@
+Data files:
+*bam.csv - csv with links to glioblastoma bam and bam index file downloads and other information about each sample
+
+*hg38 files available (Direct download link) at:
+http://hgdownload.cse.ucsc.edu/goldenPath/hg38/bigZips/hg38.chromFa.tar.gz
+
+*Circular RNA fasta and bed files available at:
+http://circbase.org/cgi-bin/downloads.cgi
