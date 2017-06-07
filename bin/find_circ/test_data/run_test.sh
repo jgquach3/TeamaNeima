@@ -6,7 +6,7 @@ rm -rf test_out
 echo ">>> building bowtie2 index..."
 bowtie2-build CDR1as_locus.fa bt2_cdr1as_locus &> bt2_build.log
 echo ">>> aligning example reads"
-bowtie2 -p16 --very-sensitive --mm -M20 --score-min=C,-15,0 -x bt2_cdr1as_locus -f -U reads.fa 2> bt2_firstpass.log | samtools view -hbuS - | samtools sort - test_vs_cdr1as
+bowtie2 -p16 --very-sensitive --mm -M20 --score-min=C,-15,0 -x bt2_cdr1as_locus -f -U reads.fa 2> bt2_firstpass.log | samtools view -hbuS - | samtools sort -o test_vs_cdr1as.bam
 echo ">>> get the unmapped"
 samtools view -hf 4 test_vs_cdr1as.bam | samtools view -Sb - > unmapped_test.bam
 echo ">>> split into anchors"
