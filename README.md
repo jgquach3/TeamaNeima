@@ -28,3 +28,18 @@ To download bam and hg38 files:
 
 **NOTE**
 Running the script will download more than 200 GB of data, so make sure you know what you're about.
+
+
+
+Alex:
+As of right now, here is how you run the script (from the root directory):
+Make sure you install pysam (pip install pysam)
+When you run on actual data, make sure you update the reference genome accordingly (hg38 for most)
+Make sure you index hg38 before running (for bowtie)
+
+source ./bin/185_Test.sh <bam_file> <indexed_file_for_bowtie> <genome>
+Example:
+	source ./bin/185_Test.sh ./data/raw_data/test_vs_cdr1as.bam ./bin/find_circ/test_data_copy/bt2_cdr1as_locus ./bin/find_circ/test_data/
+
+
+
