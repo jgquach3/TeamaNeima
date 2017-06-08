@@ -15,6 +15,11 @@ data:
 
 * hg38 files available (Direct download link) at:
 http://hgdownload.cse.ucsc.edu/goldenPath/hg38/bigZips/hg38.chromFa.tar.gz
+* USE hg19!!! *
+http://hgdownload.cse.ucsc.edu/goldenPath/hg19/bigZips/chromFa.tar.gz
+
+HERE'S THE PRE BUILT INDEX INGORE THE TOP TWO TT-TT
+wget ftp://ftp.ccb.jhu.edu/pub/data/bowtie2_indexes/hg19.zip
 
 * Circular RNA fasta and bed files available at:
 http://circbase.org/cgi-bin/downloads.cgi
