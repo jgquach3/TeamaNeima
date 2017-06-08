@@ -24,7 +24,7 @@ bin:
 * get_bam.sh - downloads glioblastoma bam files into new directory
 
 To download bam and hg38 files:
-> ../bin/get_bam.sh
+> bin/get_bam.sh
 
 **NOTE**
 Running the script will download more than 200 GB of data, so make sure you know what you're about.
